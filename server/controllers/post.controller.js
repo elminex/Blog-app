@@ -25,6 +25,7 @@ exports.addPost = async (req, res) => {
     newPost.title = title;
     newPost.author = author;
     newPost.content = content;
+    newPost.votes = 0;
     newPost.id = uuid();
 
     postSaved = await newPost.save();

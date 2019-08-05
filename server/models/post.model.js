@@ -6,6 +6,7 @@ const Post = new Schema( {
   title: {type: 'string', required: true},
   author: {type: 'string', required: true},
   content: {type: 'string', required: true},
+  votes: {type: 'number', required: true},
 });
 
 module.exports = mongoose.model('Post', Post)
