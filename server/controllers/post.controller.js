@@ -50,7 +50,7 @@ exports.editVotes = async (req, res) => {
   try {
     const { votes, id } = req.body;
     console.log(votes, id)
-    voteEdit = await Post.updateOne({ id: id }, { votes: votes });
+    voteEdit = await Post.updateOne({ id: id }, {$set: { votes: votes }});
     console.log(voteEdit);
     res.status(200).json(voteEdit)
   } catch (err) {

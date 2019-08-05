@@ -6,13 +6,13 @@ const Votes = ({ editAndLoadVotes, id, singlePost }) => {
   console.log(singlePost);
 
   const voteHandler = (action) => {
-    let newVote = singlePost.votes || 0;
+    let newVote = singlePost.votes;
     if (action === "up") {
-      newVote = + 1;
+      newVote =+ 1;  
       console.log("+1")
     } else {
       console.log("-1")
-      newVote = - 1;
+      newVote =- 1;
     }
     console.log(newVote);
     editAndLoadVotes(id, newVote);
