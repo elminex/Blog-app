@@ -1,0 +1,27 @@
+.votes {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.btn-thumb {
+  background: rgb(62, 91, 151) none repeat scroll 0% 0%;
+  color: rgb(255, 255, 255);
+  font-family: arial;
+  font-size: 12px;
+  font-weight: 900;
+  box-sizing: border-box;
+  padding: 5px;
+  min-width: 50px;
+  display: inline-block;
+  position: relative;
+  border: 2px solid white;
+  border-radius: 4px;
+  cursor: pointer;
+  &-up {
+    margin-right: 8px;
+  }
+  &-down {
+    margin-left: 8px;
+  }
+}

@@ -122,7 +122,6 @@ export const addPostRequest = (post) => {
 };
 
 export const editPostRequest = (post, id) => {
-  console.log(post)
   return async dispatch => {
     dispatch(startRequest());
     try {
@@ -176,7 +175,6 @@ export const editAndLoadVotesRequest = (id, votes) => {
       await axios.post(`${API_URL}/posts/votes/${id}`, { votes: votes, id: id });
       let res = await axios.get(`${API_URL}/posts/${id}`);
       dispatch(loadVote(res.data[0].votes));
-      console.log(res.data[0].votes);
     } catch (e) {
       dispatch(errorRequest(e.message));
     }
