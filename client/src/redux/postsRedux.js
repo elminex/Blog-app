@@ -23,7 +23,7 @@ export const ERROR_REQUEST = createActionName('ERROR_REQUEST');
 export const RESET_REQUEST = createActionName('RESET_REQUEST');
 export const EDIT_POST = createActionName('EDIT_POST');
 export const LOAD_POSTS_PAGE = createActionName('LOAD_POSTS_PAGE');
-
+export const LOAD_VOTE = createActionName('LOAD_VOTE');
 
 export const startRequest = () => ({ type: START_REQUEST });
 export const endRequest = () => ({ type: END_REQUEST });
@@ -32,6 +32,7 @@ export const loadPost = payload => ({ payload, type: LOAD_POST })
 export const errorRequest = error => ({ error, type: ERROR_REQUEST });
 export const resetRequest = () => ({ type: RESET_REQUEST });
 export const loadPostsByPage = payload => ({ payload, type: LOAD_POSTS_PAGE });
+export const loadVote = payload => ({ payload, type: LOAD_VOTE });
 
 
 /* INITIAL STATE */
@@ -73,6 +74,8 @@ export default function reducer(statePart = initialState, action = {}) {
         presentPage: action.payload.presentPage,
         data: [...action.payload.posts]
       }
+      case LOAD_VOTE: 
+      return { ...statePart, singlePost: { ...statePart.singlePost, votes: action.payload }}
     default:
       return statePart;
   }
@@ -119,6 +122,7 @@ export const addPostRequest = (post) => {
 };
 
 export const editPostRequest = (post, id) => {
+  console.log(post)
   return async dispatch => {
     dispatch(startRequest());
     try {
@@ -165,3 +169,16 @@ export const loadRandomPostRequest = () => {
     }
   };
 };
+
+export const editAndLoadVotesRequest = (id, votes) => {
+  return async dispatch => {
+    try {
+      await axios.post(`${API_URL}/posts/votes/${id}`, { votes: votes, id: id });
+      let res = await axios.get(`${API_URL}/posts/${id}`);
+      dispatch(loadVote(res.data[0].votes));
+      console.log(res.data[0].votes);
+    } catch (e) {
+      dispatch(errorRequest(e.message));
+    }
+  }
+}

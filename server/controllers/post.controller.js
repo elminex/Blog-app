@@ -36,31 +36,39 @@ exports.addPost = async (req, res) => {
 
 exports.editPost = async (req, res) => {
   try {
-    const { title, author, content } = req.body.post;
+    const { title, author, content, votes } = req.body.post;
     const { id } = req.body;
-    postEdit = await Post.updateOne({ id: id }, { title: title, author: author, content: content });
+    console.log(votes)
+    postEdit = await Post.updateOne({ id: id }, { title: title, author: author, content: content, votes: votes });
     res.status(200).json(postEdit)
   } catch (err) {
     res.status(500).json(err);
   }
 }
 
-exports.getPostsByRange = async function (req, res) {
+exports.editVotes = async (req, res) => {
+  try {
+    const { votes, id } = req.body;
+    console.log(votes, id)
+    voteEdit = await Post.updateOne({ id: id }, { votes: votes });
+    console.log(voteEdit);
+    res.status(200).json(voteEdit)
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}
 
+exports.getPostsByRange = async function (req, res) {
   try {
     let { startAt, limit } = req.params;
-
     startAt = parseInt(startAt);
     limit = parseInt(limit);
-
     const posts = await Post.find().skip(startAt).limit(limit);
     const amount = await Post.countDocuments();
-
     res.status(200).json({
       posts,
       amount,
     });
-
   } catch (err) {
     res.status(500).json(err);
   }
